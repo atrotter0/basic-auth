@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
 using BasicAuth.Models;
-using System.Threading.Tasks;
 using BasicAuth.ViewModels;
+using System.Threading.Tasks;
 
 namespace BasicAuth.Controllers
 {
@@ -32,9 +32,9 @@ namespace BasicAuth.Controllers
         }
 
         [HttpPost("/account/register")]
-        public async Task<IActionResult> Register (RegisterViewModel model)
+        public async Task<IActionResult> Register(RegisterViewModel model)
         {
-            var user = new ApplicationUser { UserName = model.Email };
+            var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
             IdentityResult result = await _userManager.CreateAsync(user, model.Password);
             if (result.Succeeded)
             {
