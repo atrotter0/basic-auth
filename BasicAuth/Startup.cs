@@ -16,7 +16,8 @@ namespace BasicAuth
         {
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
-                .AddEnvironmentVariables();
+                .AddEnvironmentVariables()
+                .AddJsonFile("appsettings.json");
             Configuration = builder.Build();
         }
 
@@ -25,10 +26,10 @@ namespace BasicAuth
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+            
             services.AddEntityFrameworkMySql()
-                    .AddDbContext<ApplicationDbContext>(options =>
-                                              options
-                                                   .UseMySql(Configuration["ConnectionStrings:DefaultConnection"]));
+                    .AddDbContext<ApplicationDbContext>(options => options.UseMySql(Configuration["ConnectionStrings:DefaultConnection"]));
+            
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
