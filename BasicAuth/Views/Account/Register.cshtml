@@ -3,20 +3,26 @@
 
 @{
     ViewData["Title"] = "Register";
+    Layout = "_Layout";
 }
 
-<h2>Register a new user</h2>
-<hr />
-@using (Html.BeginForm("Register", "Account", FormMethod.Post))
-{
-    @Html.LabelFor(user => user.Email)
-    @Html.TextBoxFor(user=> user.Email)
-
-    @Html.LabelFor(user=> user.Password)
-    @Html.PasswordFor(user=> user.Password)
-
-    @Html.LabelFor(user=> user.ConfirmPassword)
-    @Html.PasswordFor(user=> user.ConfirmPassword)
-
-    <input type="submit" value="Register" />
-}
+<div class="container">
+    <h2>Register a new user</h2>
+    <hr />
+    @using (Html.BeginForm("Register", "Account", FormMethod.Post))
+    {
+        <div class="form-group">
+            @Html.LabelFor(user => user.Email)
+            @Html.TextBoxFor(user=> user.Email, new { @class="form-control" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(user=> user.Password)
+            @Html.PasswordFor(user=> user.Password, new { @class="form-control" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(user=> user.ConfirmPassword)
+            @Html.PasswordFor(user=> user.ConfirmPassword, new { @class="form-control" })
+        </div>
+        <button type="submit" class="btn btn-lg btn-success">Register</button>
+    }
+</div>
