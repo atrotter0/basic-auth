@@ -34,19 +34,33 @@ namespace BasicAuth
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
-            services.AddIdentity<ApplicationUser, IdentityRole>(options => {   
-                options.Password.RequireUppercase = false;
-                options.Password.RequireNonAlphanumeric = false;
-                options.Password.RequiredLength = 0;
+            services.Configure<IdentityOptions>(options =>
+            {
+                // Password settings
                 options.Password.RequireDigit = false;
+                options.Password.RequiredLength = 3;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequireLowercase = false;
+
+                // Lockout settings
+                // options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(30);
+                // options.Lockout.MaxFailedAccessAttempts = 10;
+
+                // Cookie settings
+                // options.Cookies.ApplicationCookie.ExpireTimeSpan = TimeSpan.FromDays(150);
+                // options.Cookies.ApplicationCookie.LoginPath = "/Account/Login";
+
+                // User settings
+                options.User.RequireUniqueEmail = true;
             });
         }
 
         public void Configure(IApplicationBuilder app)
         {
-            app.UseIdentity();
             app.UseStaticFiles();
             app.UseDeveloperExceptionPage();
+            app.UseIdentity();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
